@@ -24,8 +24,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.16.1
   weather_icons: ^2.0.1
+  image_picker: ^0.6.7+4
 
 
   # The following adds the Cupertino Icons font to your application.

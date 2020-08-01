@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(MyApp());
@@ -71,6 +72,9 @@ class _WriteDiaryState extends State<WriteDiary> {
 
   String _weather;
   String _emotion;
+
+  PickedFile _image;
+  final picker = ImagePicker();
 
   setDate(DateTime date) {
     var dateParse = DateTime.parse(date.toString());
@@ -240,7 +244,7 @@ class _WriteDiaryState extends State<WriteDiary> {
       appBar: AppBar(
         title: Text('write'),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -298,8 +302,20 @@ class _WriteDiaryState extends State<WriteDiary> {
                   Icons.add_photo_alternate,
                   size: 40,
                 ),
-                onPressed: () {},
+                onPressed: getImage,
               ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, 10, 20, 8),
+            child: TextField(
+              maxLength: 500,
+              maxLines: 25,
+              style: TextStyle(fontSize: 15),
+              decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.all(0),
+                  hintText: '내용'),
             ),
           )
         ],
@@ -310,9 +326,17 @@ class _WriteDiaryState extends State<WriteDiary> {
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
         border: Border.all(
-          width: 3,
+          width: 2,
           color: Colors.blue,
         ),
         borderRadius: BorderRadius.all(Radius.circular(10)));
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = PickedFile(pickedFile.path);
+    });
   }
 }
