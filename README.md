@@ -1,4 +1,4 @@
-# picture_diary
+# photo_diary
 
 A new Flutter application.
 
